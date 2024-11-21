@@ -1,4 +1,3 @@
-@@ -0,0 +1,38 @@
 package com.geeks.cleanArch.presentation.activity
 
 import android.view.LayoutInflater
