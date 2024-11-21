@@ -1,6 +1,6 @@
 package com.geeks.cleanArch.presentation.activity
 
-import TaskListAdapter
+import com.geeks.cleanArch.TaskListAdapter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.geeks.cleanArch.databinding.ActivityTaskListBinding
