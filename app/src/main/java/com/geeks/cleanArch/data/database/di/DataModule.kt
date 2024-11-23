@@ -3,7 +3,7 @@ package com.geeks.cleanArch.data.database.di
 import androidx.room.Room
 import com.geeks.cleanArch.data.database.AppDatabase
 import com.geeks.cleanArch.data.repositoryImpl.TaskManagerRepositoryImpl
-import com.geeks.cleanArch.domain.reposiotry.TaskManagerRepository
+import com.geeks.cleanArch.domain.repository.TaskManagerRepository
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

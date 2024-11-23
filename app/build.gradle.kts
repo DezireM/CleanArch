@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -43,13 +44,20 @@ android {
 }
 
 dependencies {
+    val nav_version = "2.8.3"
+
+    // Views/Fragments Integration
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
+    implementation(libs.androidx.fragment.ktx)
 
     // Retrofit
     implementation(libs.retrofit)
 
     // OkHttp
     implementation(libs.okhttp)
-//    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp3.logging.interceptor)
 
     // Koin
     runtimeOnly(libs.koin.android)
