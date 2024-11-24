@@ -1,5 +1,6 @@
 package com.geeks.cleanArch.domain.usecase
 
+import android.util.Log
 import com.geeks.cleanArch.domain.model.TaskModel
 import com.geeks.cleanArch.domain.repository.TaskManagerRepository
 
@@ -9,5 +10,6 @@ class GetTaskUseCase(
 
     suspend operator fun invoke(id:Int): TaskModel?{
         return taskManagerRepository.getTask(id)
+        Log.e("Miss","getTask:$id")
     }
 }

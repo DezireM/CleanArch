@@ -36,6 +36,7 @@ class TaskListFragment : Fragment() {
         initialize()
         showTask()
         viewModel.loadTasks()
+        viewModel.fetchTask()
     }
 
     private fun addTask() {
@@ -58,6 +59,7 @@ class TaskListFragment : Fragment() {
     private fun showTask() {
         viewModel.viewModelScope.launch {
             viewModel.taskFlow.collectLatest {
+                taskAdapter.updateTasks(it)
                 taskAdapter.updateTasks(it)
             }
         }
