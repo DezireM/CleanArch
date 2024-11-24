@@ -1,7 +1,12 @@
 package com.geeks.cleanArch
 
+<<<<<<< HEAD
 import com.geeks.cleanArch.presentation.fragment.viewmodel.MainActivityViewModel
 import com.geeks.cleanArch.domain.usecase.InsertTaskUseCase
+=======
+import MainActivityViewModel
+import com.example.hw_4.domain.usecase.InsertTaskUseCase
+>>>>>>> 65528896eceff0627ec0003af5470573dad0dc6a
 import com.geeks.cleanArch.domain.usecase.GetAllTasksUseCase
 import com.geeks.cleanArch.domain.usecase.GetTaskUseCase
 import com.geeks.cleanArch.domain.usecase.TaskDelete
