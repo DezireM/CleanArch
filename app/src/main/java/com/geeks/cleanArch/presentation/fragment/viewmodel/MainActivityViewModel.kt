@@ -67,7 +67,7 @@ class MainActivityViewModel(
                 delete.deleteTask(taskUI.toDomain())
                 loadTasks()
             } catch (e: Exception) {
-                Log.e("Daisy", "Ошибка : ${e.message}")
+                Log.e("Daisy", "Error : ${e.message}")
             }
         }
     }

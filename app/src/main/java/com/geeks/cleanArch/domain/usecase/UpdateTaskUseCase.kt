@@ -8,9 +8,9 @@ class UpdateTaskUseCase(private val taskRepository: TaskManagerRepository) {
     suspend fun updateTask(taskModel: TaskModel): String {
         return try {
             taskRepository.updateTask(taskModel)
-            "Все Гуд"
+            "Good"
         } catch (e: Exception) {
-            "Ошибка : ${e.message}"
+            "Error: ${e.message}"
         }
     }
 }

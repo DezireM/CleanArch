@@ -11,7 +11,6 @@ import com.geeks.cleanArch.TaskUI
 import com.geeks.cleanArch.databinding.FragmentTaskDetailBinding
 import kotlinx.coroutines.launch
 
-@Suppress("UNREACHABLE_CODE")
 class TaskDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskDetailBinding
@@ -25,27 +24,33 @@ class TaskDetailFragment : Fragment() {
     ): View {
         binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
         return binding.root
-        arguments?.let {
-            taskId = it.getInt("taskId")
-        }
-        viewModel.viewModelScope.launch {
-            viewModel.getTask(id)
-
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateUI()
-        setUpListeners()
 
+        arguments?.let {
+            taskId = it.getInt("taskId", -1)
+        }
+
+
+        taskId.takeIf { it != -1 }?.let {
+            viewModel.viewModelScope.launch {
+                taskUI = viewModel.getTask(it)
+                updateUI()
+            }
+        }
+
+        setUpListeners()
     }
 
     private fun setUpListeners() {
         binding.btnSaveTask.setOnClickListener {
             val updatedTask = taskUI?.copy(
                 taskName = binding.etTaskName.text.toString(),
-                taskDate = binding.etTaskDate.text.toString())
+                taskDate = binding.etTaskDate.text.toString()
+            )
+
             updatedTask?.let {
                 viewModel.updateTask(it)
                 findNavController().navigateUp()
@@ -54,10 +59,12 @@ class TaskDetailFragment : Fragment() {
     }
 
     private fun updateUI() {
-        binding.etTaskName.setText(taskUI?.taskName)
-        binding.etTaskDate.setText(taskUI?.taskDate)
-        taskUI?.taskPhoto?.let {
-            binding.addPhoto.setImageURI(Uri.parse(it))
+        taskUI?.let {
+            binding.etTaskName.setText(it.taskName)
+            binding.etTaskDate.setText(it.taskDate)
+            it.taskPhoto?.let { photoUri ->
+                binding.addPhoto.setImageURI(Uri.parse(photoUri))
+            }
         }
     }
 }

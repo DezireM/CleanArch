@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.geeks.cleanArch"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.geeks.cleanArch"
@@ -44,16 +44,16 @@ android {
 }
 
 dependencies {
-    val nav_version = "2.8.3"
 
     // Views/Fragments Integration
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.androidx.fragment.ktx)
 
     // Retrofit
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // OkHttp
     implementation(libs.okhttp)

@@ -38,7 +38,7 @@ class TaskManagerRepositoryImpl(private val taskManagerDao: TaskManagerDao) :
 
     override suspend fun getTask(id: Int): TaskModel? {
         val taskDto = taskManagerDao.getTaskById(id)
-        return taskDto?.toDomain()
+        return taskDto.toDomain()
     }
 
 

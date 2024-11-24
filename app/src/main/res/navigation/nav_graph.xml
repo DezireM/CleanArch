@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/taskListFragment">
 
+
     <fragment
         android:id="@+id/taskListFragment"
         android:name="com.geeks.cleanArch.presentation.fragment.TaskListFragment"
@@ -18,6 +19,7 @@
             app:destination="@id/taskDetailFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.geeks.cleanArch.presentation.fragment.AddTaskFragment"
@@ -28,14 +30,16 @@
             app:destination="@id/taskListFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.geeks.cleanArch.presentation.fragment.TaskDetailFragment"
         android:label="fragment_task_detail"
         tools:layout="@layout/fragment_task_detail">
         <argument
-            android:name="task"
-            app:argType="com.geeks.cleanArch.domain.model.Task" />
+            android:name="taskId"
+            app:argType="integer" />
     </fragment>
+
 
 </navigation>
