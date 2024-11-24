@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -10,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.geeks.cleanArch"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,8 +20,6 @@ android {
     }
 
     buildTypes {
-        debug {
-        }
 
         release {
             isMinifyEnabled = false
@@ -31,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     viewBinding {
         enable = true
@@ -44,12 +43,19 @@ android {
 
 dependencies {
 
+    // Views/Fragments Integration
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.androidx.fragment.ktx)
+
     // Retrofit
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // OkHttp
     implementation(libs.okhttp)
-//    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp3.logging.interceptor)
 
     // Koin
     runtimeOnly(libs.koin.android)
