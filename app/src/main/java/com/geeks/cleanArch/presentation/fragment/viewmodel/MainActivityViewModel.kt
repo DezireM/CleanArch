@@ -1,9 +1,12 @@
+package com.geeks.cleanArch.presentation.fragment.viewmodel
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.geeks.cleanArch.TaskUI
 import com.geeks.cleanArch.domain.usecase.GetAllTasksUseCase
 import com.geeks.cleanArch.domain.usecase.GetTaskUseCase
+import com.geeks.cleanArch.domain.usecase.InsertTaskUseCase
 import com.geeks.cleanArch.domain.usecase.TaskDelete
 import com.geeks.cleanArch.domain.usecase.UpdateTaskUseCase
 import com.geeks.cleanArch.toDomain
@@ -29,15 +32,11 @@ class MainActivityViewModel(
     private val _insertMessageStateFlow = MutableStateFlow(String())
     val insertMessageFlow: StateFlow<String> = _insertMessageStateFlow.asStateFlow()
 
-    private val _updateMessageStateFlow = MutableStateFlow(String())
-    val updateMessageFlow: StateFlow<String> = _updateMessageStateFlow
 
     fun insertTask(taskUI: TaskUI) {
         viewModelScope.launch(Dispatchers.IO) {
             val message = insertTaskUseCase.insertTask(taskUI.toDomain())
-            withContext(Dispatchers.Main) {
-                _insertMessageStateFlow.value = message
-            }
+            _insertMessageStateFlow.value = message
         }
     }
 

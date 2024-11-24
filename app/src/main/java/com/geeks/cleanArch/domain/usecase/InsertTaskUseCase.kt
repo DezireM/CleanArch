@@ -1,5 +1,6 @@
-import android.os.Build
-import androidx.annotation.RequiresApi
+package com.geeks.cleanArch.domain.usecase
+
+
 import com.geeks.cleanArch.domain.model.TaskModel
 import com.geeks.cleanArch.domain.repository.TaskManagerRepository
 import java.time.LocalDateTime
@@ -7,8 +8,7 @@ import java.time.LocalDateTime
 class InsertTaskUseCase(private val taskManagerRepository: TaskManagerRepository) {
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun insertTask(taskModel: TaskModel): String {
+   suspend fun  insertTask(taskModel: TaskModel): String {
 
         val existingTask = taskManagerRepository.getTaskByName(taskModel.taskName)
         if (existingTask != null) {

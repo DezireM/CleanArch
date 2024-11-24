@@ -1,3 +1,5 @@
+
+package com.geeks.cleanArch.presentation.fragment
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.geeks.cleanArch.TaskUI
 import com.geeks.cleanArch.databinding.FragmentTaskDetailBinding
+import com.geeks.cleanArch.presentation.fragment.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.launch
 
 class TaskDetailFragment : Fragment() {
@@ -62,7 +65,7 @@ class TaskDetailFragment : Fragment() {
         taskUI?.let {
             binding.etTaskName.setText(it.taskName)
             binding.etTaskDate.setText(it.taskDate)
-            it.taskPhoto?.let { photoUri ->
+            it.taskPhoto.let { photoUri ->
                 binding.addPhoto.setImageURI(Uri.parse(photoUri))
             }
         }

@@ -1,6 +1,5 @@
 package com.geeks.cleanArch.presentation.fragment
 
-import MainActivityViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.geeks.cleanArch.R
 import com.geeks.cleanArch.databinding.FragmentTaskListBinding
 import com.geeks.cleanArch.presentation.fragment.adapter.TaskListAdapter
+import com.geeks.cleanArch.presentation.fragment.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
