@@ -1,12 +1,15 @@
 package com.geeks.cleanArch
 
+import addTaskModule
 import android.app.Application
-import com.geeks.cleanArch.data.database.di.dataModules
-import com.geeks.cleanArch.domain.di.domainModule
+import com.example.data.database.di.dataModules
+import com.example.domain.di.domainModule
+import com.geeks.cleanArch.presentation.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+
+
 
 class App : Application() {
 
@@ -14,10 +17,11 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            androidLogger(Level.DEBUG)
+            androidLogger()
             modules(dataModules)
             modules(domainModule)
             modules(uiModule)
+            modules(addTaskModule)
         }
     }
 }

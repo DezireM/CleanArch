@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.geeks.cleanArch.databinding.ItemTaskBinding
-import com.geeks.cleanArch.TaskUI
+import com.geeks.cleanArch.presentation.model.TaskUI
 
 class TaskListAdapter(
     private var taskList: List<TaskUI>,

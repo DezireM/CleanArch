@@ -2,46 +2,55 @@
 package com.geeks.cleanArch.presentation.fragment
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.geeks.cleanArch.TaskUI
+import com.geeks.cleanArch.R
+import com.geeks.cleanArch.presentation.model.TaskUI
 import com.geeks.cleanArch.databinding.FragmentTaskDetailBinding
-import com.geeks.cleanArch.presentation.fragment.viewmodel.MainActivityViewModel
-import com.geeks.cleanArch.presentation.fragment.viewmodel.TaskDetailViewModel
+import com.geeks.cleanArch.presentation.fragment.viewmodel.LoadingState
+import com.geeks.cleanArch.presentation.fragment.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
 
-@Suppress("UNREACHABLE_CODE")
-class TaskDetailFragment : Fragment() {
+class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
 
     private lateinit var binding: FragmentTaskDetailBinding
-    private val viewModel: TaskDetailViewModel by viewModels()
+    private val viewModel: TaskViewModel by viewModels()
     private val navArgs by navArgs<TaskDetailFragmentArgs>()
-    private var taskUI:TaskUI? = null
+    private var taskUI: TaskUI? = null
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateUI()
         setUpListeners()
+        updateUI()
+
+        viewModel.loadTask(navArgs.taskId)
 
         viewModel.viewModelScope.launch {
-            taskUI = viewModel.getTask(navArgs.taskId)
-
+            viewModel.taskStateFlow.collect { task ->
+                task?.let {
+                    taskUI = task
+                    updateUI()
+                }
+            }
         }
 
+        viewModel.viewModelScope.launch {
+            viewModel.loadingFlow.collect {state ->
+                when(state ) {
+                    is LoadingState.Loading -> {}
+                    is LoadingState.Error -> {
+                        Toast.makeText(requireContext(), "Error updating task", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun setUpListeners() {
@@ -51,6 +60,7 @@ class TaskDetailFragment : Fragment() {
                 taskDate = binding.etTaskDate.text.toString())
             updatedTask?.let {
                 viewModel.updateTask(it)
+                findNavController().navigateUp()
 
             }
 
@@ -60,7 +70,7 @@ class TaskDetailFragment : Fragment() {
     private fun updateUI() {
         binding.etTaskName.setText(taskUI?.taskName)
         binding.etTaskDate.setText(taskUI?.taskDate)
-        taskUI?.taskPhoto?.let {
+        taskUI?.taskImage?.let {
             binding.addPhoto.setImageURI(Uri.parse(it))
         }
     }

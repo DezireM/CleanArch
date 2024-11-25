@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DFE6E7"
-    tools:context=".presentation.fragment.AddTaskFragment">
+    tools:context="com.example.addtask.AddTaskFragment">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -58,7 +58,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/change_photo"
+        android:id="@+id/change_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/baseline_add_photo_alternate_24"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:text="Save Task"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/change_photo"
+        app:layout_constraintTop_toBottomOf="@id/change_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:backgroundTint="#DE9A35"
