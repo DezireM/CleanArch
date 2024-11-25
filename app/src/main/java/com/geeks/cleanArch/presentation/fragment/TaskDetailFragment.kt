@@ -1,5 +1,5 @@
-
 package com.geeks.cleanArch.presentation.fragment
+
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -9,16 +9,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.geeks.cleanArch.R
-import com.geeks.cleanArch.presentation.model.TaskUI
 import com.geeks.cleanArch.databinding.FragmentTaskDetailBinding
-import com.geeks.cleanArch.presentation.fragment.viewmodel.LoadingState
 import com.geeks.cleanArch.presentation.fragment.viewmodel.TaskViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.example.domain.result.Result
+import com.geeks.cleanArch.presentation.model.TaskUI
+
 
 class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
 
-    private lateinit var binding: FragmentTaskDetailBinding
+    private val binding by viewBinding(FragmentTaskDetailBinding::bind)
     private val viewModel: TaskViewModel by viewModels()
     private val navArgs by navArgs<TaskDetailFragmentArgs>()
     private var taskUI: TaskUI? = null
@@ -26,44 +30,43 @@ class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpListeners()
+
+        val taskId = navArgs.taskId
+        viewModel.getTask(taskId)
+        setupListeners()
         updateUI()
 
-        viewModel.loadTask(navArgs.taskId)
-
-        viewModel.viewModelScope.launch {
-            viewModel.taskStateFlow.collect { task ->
-                task?.let {
-                    taskUI = task
-                    updateUI()
-                }
-            }
-        }
-
-        viewModel.viewModelScope.launch {
-            viewModel.loadingFlow.collect {state ->
-                when(state ) {
-                    is LoadingState.Loading -> {}
-                    is LoadingState.Error -> {
-                        Toast.makeText(requireContext(), "Error updating task", Toast.LENGTH_SHORT).show()
+        viewModel.viewModelScope.launch(Dispatchers.Main) {
+            viewModel.taskStateFlow.collectLatest {
+                when (it) {
+                    is Result.Success -> {
+                        taskUI = it.data
                     }
-                    else -> {}
+
+                    is Result.Failed-> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    is Result.Loading -> {
+                        Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
     }
 
-    private fun setUpListeners() {
+    private fun setupListeners() {
         binding.btnSaveTask.setOnClickListener {
             val updatedTask = taskUI?.copy(
                 taskName = binding.etTaskName.text.toString(),
-                taskDate = binding.etTaskDate.text.toString())
+                taskDate = binding.etTaskDate.text.toString()
+            )
             updatedTask?.let {
-                viewModel.updateTask(it)
+                viewModel.viewModelScope.launch {
+                    viewModel.getTask(it.id)
+                }
                 findNavController().navigateUp()
-
             }
-
         }
     }
 

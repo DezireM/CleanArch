@@ -6,27 +6,25 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.geeks.cleanArch.databinding.ItemTaskBinding
 import com.geeks.cleanArch.presentation.model.TaskUI
+import kotlin.reflect.KSuspendFunction1
 
 class TaskListAdapter(
-    private var taskList: List<TaskUI>,
-    private val onItemClick: (id:Int) -> Unit,
-    private val onTaskDeleted: (TaskUI) -> Unit
+private var taskList: List<TaskUI>,
+private val onItemClick: (id: Int) -> Unit,
+private val onTaskDelete: (TaskUI) -> Unit
 ) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(taskUI: TaskUI) {
-            binding.tvTaskName.setText(taskUI.taskName)
-            binding.tvTaskDate.text = taskUI.taskDate
-            binding.root.setOnClickListener {
-                onItemClick(taskUI.id)
-            }
+        fun bind(task: TaskUI) {
+            binding.tvTaskName.text = task.taskName
+            binding.tvTaskDate.text = task.taskDate
+            binding.root.setOnClickListener { onItemClick(task.id) }
         }
     }
 
-    private val itemTouch = object : ItemTouchHelper.SimpleCallback(
-        0, ItemTouchHelper.LEFT
-    ) {
+    private val itemTouch = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
@@ -37,8 +35,8 @@ class TaskListAdapter(
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
-            val taskToDelete = taskList[position]
-            onTaskDeleted(taskToDelete)
+            val taskDeleted = taskList[position]
+            onTaskDelete(taskDeleted)
         }
     }
 
