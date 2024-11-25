@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".App"
@@ -16,17 +17,17 @@
         android:theme="@style/Theme.CleanArch"
         tools:targetApi="31" >
         <activity
-            android:name=".TaskListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.addtask.activity.AddTaskActivity" />
+
     </application>
 
 </manifest>
