@@ -1,7 +1,7 @@
-package com.geeks.cleanArch.domain.usecase
+package com.example.domain.usecase
 
-import com.geeks.cleanArch.domain.model.TaskModel
-import com.geeks.cleanArch.domain.repository.TaskManagerRepository
+import com.example.domain.model.TaskModel
+import com.example.domain.repository.TaskManagerRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAllTasksUseCase(private val taskManagerRepository: TaskManagerRepository) {

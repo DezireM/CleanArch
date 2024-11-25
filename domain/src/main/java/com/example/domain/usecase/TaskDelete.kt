@@ -1,7 +1,7 @@
-package com.geeks.cleanArch.domain.usecase
+package com.example.domain.usecase
 
-import com.geeks.cleanArch.domain.model.TaskModel
-import com.geeks.cleanArch.domain.repository.TaskManagerRepository
+import com.example.domain.model.TaskModel
+import com.example.domain.repository.TaskManagerRepository
 
 class TaskDelete(private val taskManagerRepository: TaskManagerRepository) {
 

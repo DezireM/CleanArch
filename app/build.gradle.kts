@@ -1,17 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id("com.google.devtools.ksp")
     id ("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
     namespace = "com.geeks.cleanArch"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.geeks.cleanArch"
-        minSdk = 26
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -36,38 +37,27 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    viewBinding {
-        enable = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
 
-    // Views/Fragments Integration
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    
+    implementation(project(":addtask"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
-    implementation(libs.androidx.fragment.ktx)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
-    // OkHttp
-    implementation(libs.okhttp)
-    implementation(libs.okhttp3.logging.interceptor)
 
     // Koin
-    runtimeOnly(libs.koin.android)
-    implementation(libs.koin.androidx.navigation)
-    implementation(libs.koin.core.coroutines)
-    implementation(libs.koin.core.viewmodel)
+    implementation(libs.koin.android)
 
-    // Room
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 
     implementation(libs.gson)
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -77,5 +67,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Navigation
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
+    implementation (libs.viewbindingpropertydelegate.noreflection)
 
 }

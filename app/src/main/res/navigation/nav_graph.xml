@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.geeks.cleanArch.presentation.fragment.AddTaskFragment"
+        android:name="com.example.addtask.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task">
         <action

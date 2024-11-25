@@ -21,3 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "CleanArch"
 include(":app")
+include(":addtask")
+include(":data")
+
+
+
+include(":domain")
