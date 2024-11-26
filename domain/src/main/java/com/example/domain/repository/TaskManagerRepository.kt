@@ -11,5 +11,4 @@ interface TaskManagerRepository {
     suspend fun getTaskByName(taskName: String): Result<TaskModel>
     suspend fun updateTask(taskModel: TaskModel): Result<TaskModel>
     suspend fun deleteTask(task: TaskModel): Result<TaskModel>
-
 }

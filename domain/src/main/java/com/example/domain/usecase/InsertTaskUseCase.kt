@@ -16,7 +16,7 @@ class InsertTaskUseCase(private val taskManagerRepository: TaskManagerRepository
             }
 
             val taskDate = taskModel.taskDate.toIntOrNull()
-            val currentHour: Int = if (versionSdk >= VERSION_CODES_0) {
+            val currentHour: Int = if (versionSdk >= 26) {
                 LocalDateTime.now().hour
             } else {
                 Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
@@ -34,5 +34,3 @@ class InsertTaskUseCase(private val taskManagerRepository: TaskManagerRepository
         }
     }
 }
-
-private const val VERSION_CODES_0 = 26

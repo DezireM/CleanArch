@@ -8,13 +8,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class GetAllTasksUseCase(private val taskManagerRepository: TaskManagerRepository) {
+
     suspend operator fun invoke(): Flow<Result<List<TaskModel>>> {
         return taskManagerRepository.getAllTasks()
-            .map { tasks ->
-                Result.Success(tasks)
+            .map { list ->
+                Result.Success(list.map { it.toDomain() })
             }
             .catch { e ->
-                emit(Result.Failed(e.localizedMessage ?: "An error occurred"))
+                emit(Result.Failed(e.localizedMessage ?: "Error fetching tasks"))
             }
     }
 }
