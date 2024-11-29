@@ -1,24 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/taskListFragment">
-
+    app:startDestination="@id/tasksFragment">
 
     <fragment
-        android:id="@+id/taskListFragment"
-        android:name="com.geeks.cleanArch.presentation.fragment.TaskListFragment"
-        android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list">
+        android:id="@+id/tasksFragment"
+        android:name="com.geeks.cleanArch.presentation.fragment.TasksFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_tasks">
         <action
-            android:id="@+id/action_taskListFragment_to_addTaskFragment"
+            android:id="@+id/action_tasksFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
         <action
-            android:id="@+id/action_taskListFragment_to_taskDetailFragment"
+            android:id="@+id/action_tasksFragment_to_taskDetailFragment"
             app:destination="@id/taskDetailFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/addTaskFragment"
@@ -26,10 +23,9 @@
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task">
         <action
-            android:id="@+id/action_addTaskFragment_to_taskListFragment"
-            app:destination="@id/taskListFragment" />
+            android:id="@+id/action_addTaskFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/taskDetailFragment"
@@ -40,6 +36,5 @@
             android:name="taskId"
             app:argType="integer" />
     </fragment>
-
 
 </navigation>

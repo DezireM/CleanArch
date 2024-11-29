@@ -16,24 +16,13 @@ class AddTaskViewModel(
     private val insertTaskUseCase: InsertTaskUseCase,
 ) : ViewModel() {
 
-    private val _insertMessageStateFlow = MutableStateFlow("")
+    private val _insertMessageStateFlow = MutableStateFlow(String())
     val insertMessageFlow: StateFlow<String> = _insertMessageStateFlow.asStateFlow()
 
     fun insertTask(taskUI: TaskUI) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = insertTaskUseCase.insertTask(taskUI.toDomain(), Build.VERSION.SDK_INT)
-
-            when (result) {
-                is Result.Success -> {
-                    _insertMessageStateFlow.value = "Task inserted successfully!"
-                }
-                is Result.Failed -> {
-                    _insertMessageStateFlow.value = "Error: ${result.message}"
-                }
-                is Result.Loading -> {
-                    _insertMessageStateFlow.value = "Inserting task..."
-                }
-            }
+            val message = insertTaskUseCase.insertTask(taskUI.toDomain(), Build.VERSION.SDK_INT)
+            _insertMessageStateFlow.value = message.toString()
         }
     }
 }

@@ -12,16 +12,5 @@ data class TaskDto(
     val taskImage: String? = null
 )
 
-fun TaskModel.toData() = TaskDto(
-    id = id,
-    taskName = taskName.takeIf { it.isNotEmpty() },
-    taskDate = taskDate.takeIf { it.isNotEmpty() },
-    taskImage = taskImage.takeIf { it.isNotEmpty() }
-)
-
-fun TaskDto.toDomain() = TaskModel(
-    id = id,
-    taskName = taskName.orEmpty(),
-    taskDate = taskDate.orEmpty(),
-    taskImage = taskImage.orEmpty()
-)
+fun TaskModel.toData() = TaskDto(id, taskName, taskDate, taskImage)
+fun TaskDto.toDomain() = TaskModel(id, taskName.orEmpty(), taskDate.orEmpty(), taskImage.orEmpty())

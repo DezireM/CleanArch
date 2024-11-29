@@ -6,7 +6,13 @@ import com.example.domain.result.Result
 
 class UpdateTaskUseCase(private val taskManagerRepository: TaskManagerRepository) {
 
-    suspend operator fun invoke(taskModel: TaskModel): Result<TaskModel> {
-        return taskManagerRepository.updateTask(taskModel)
+    suspend fun updateTask(taskModel: TaskModel): Result<TaskModel> {
+        try {
+            taskManagerRepository.updateTask(taskModel)
+            return Result.Success(taskModel)
+        } catch (e: Exception) {
+            Result.Failed(e.message ?: "Error updating task")
+        }
+        return Result.Success(taskModel)
     }
 }

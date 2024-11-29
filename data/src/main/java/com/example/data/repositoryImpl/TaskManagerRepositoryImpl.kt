@@ -1,14 +1,13 @@
 package com.example.data.repositoryImpl
 
-import com.example.data.database.dao.TaskManagerDao
-import com.example.data.dto.toData
-import com.example.data.dto.toDomain
 import com.example.domain.model.TaskModel
 import com.example.domain.repository.TaskManagerRepository
 import com.example.domain.result.Result
+import com.example.data.database.dao.TaskManagerDao
+import com.example.data.dto.toData
+import com.example.data.dto.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.catch
 
 class TaskManagerRepositoryImpl(
     private val taskManagerDao: TaskManagerDao
@@ -20,10 +19,10 @@ class TaskManagerRepositoryImpl(
             if (data != null) {
                 Result.Success(data.toDomain())
             } else {
-                Result.Failed("No task found with id: $id")
+                Result.Failed("Task not found")
             }
         } catch (ex: Exception) {
-            Result.Failed("Error fetching task: ${ex.localizedMessage}")
+            Result.Failed(ex.message.toString())
         }
     }
 
@@ -32,17 +31,18 @@ class TaskManagerRepositoryImpl(
             taskManagerDao.insertTask(taskModel.toData())
             Result.Success(taskModel)
         } catch (e: Exception) {
-            Result.Failed("Error inserting task: ${e.localizedMessage}")
+            Result.Failed(e.message.toString())
         }
     }
 
     override suspend fun getAllTasks(): Flow<Result<List<TaskModel>>> {
         return taskManagerDao.getAllTasks()
-            .map { tasks ->
-                Result.Success(tasks.map { it.toDomain() })
-            }
-            .catch { e ->
-                emit(Result.Failed("Error fetching tasks: ${e.localizedMessage}"))
+            .map { list ->
+                try {
+                    Result.Success(list.map { it.toDomain() })
+                } catch (e: Exception) {
+                    Result.Failed(e.message ?: "An unknown error occurred")
+                }
             }
     }
 
@@ -52,10 +52,10 @@ class TaskManagerRepositoryImpl(
             if (task != null) {
                 Result.Success(task)
             } else {
-                Result.Failed("Task with name '$taskName' not found")
+                Result.Failed("Task not found")
             }
         } catch (e: Exception) {
-            Result.Failed("Error fetching task by name: ${e.localizedMessage}")
+            Result.Failed(e.message ?: "An unknown error occurred")
         }
     }
 
@@ -64,7 +64,7 @@ class TaskManagerRepositoryImpl(
             taskManagerDao.updateTask(taskModel.toData())
             Result.Success(taskModel)
         } catch (e: Exception) {
-            Result.Failed("Error updating task: ${e.localizedMessage}")
+            Result.Failed(e.message.toString())
         }
     }
 
@@ -73,7 +73,7 @@ class TaskManagerRepositoryImpl(
             taskManagerDao.deleteTask(task.toData())
             Result.Success(task)
         } catch (e: Exception) {
-            Result.Failed("Error deleting task: ${e.localizedMessage}")
+            Result.Failed(e.message.toString())
         }
     }
 }
