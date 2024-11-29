@@ -7,6 +7,10 @@ import com.example.domain.result.Result
 class TaskDelete(private val taskManagerRepository: TaskManagerRepository) {
 
     suspend fun deleteTask(taskModel: TaskModel): Result<TaskModel> {
-        return taskManagerRepository.deleteTask(taskModel)
+        return try {
+            (taskManagerRepository.deleteTask(taskModel))
+        } catch (e: Exception) {
+            Result.Failed(e.localizedMessage ?: "Error deleting task")
+        }
     }
 }

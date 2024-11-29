@@ -48,7 +48,7 @@ dependencies {
     // Room
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.runtime)
+    implementation("androidx.room:room-runtime:2.6.1")
 
     // Gson
     implementation(libs.gson)

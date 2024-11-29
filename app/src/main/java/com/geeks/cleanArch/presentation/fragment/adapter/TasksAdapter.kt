@@ -6,16 +6,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.geeks.cleanArch.databinding.ItemTaskBinding
 import com.geeks.cleanArch.presentation.model.TaskUI
-import kotlin.reflect.KSuspendFunction1
 
-class TaskListAdapter(
-private var taskList: List<TaskUI>,
-private val onItemClick: (id: Int) -> Unit,
-private val onTaskDelete: (TaskUI) -> Unit
-) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
+class TasksAdapter(
+    private var taskList: List<TaskUI>,
+    private val onItemClick: (id: Int) -> Unit,
+    private val onTaskDelete: (TaskUI) -> Unit
+) : RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: TaskUI) {
             binding.tvTaskName.text = task.taskName
@@ -24,7 +22,7 @@ private val onTaskDelete: (TaskUI) -> Unit
         }
     }
 
-    private val itemTouch = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+    private val itemTouch = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,

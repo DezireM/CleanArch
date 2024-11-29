@@ -7,11 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 
 class GetAllTasksUseCase(private val taskManagerRepository: TaskManagerRepository) {
-
     suspend operator fun invoke(): Flow<Result<List<TaskModel>>> {
         return taskManagerRepository.getAllTasks()
             .catch { e ->
-                emit(Result.Failed("Error fetching tasks: ${e.localizedMessage}"))
+                emit(Result.Failed("Error getting all tasks: ${e.localizedMessage}"))
             }
     }
 }

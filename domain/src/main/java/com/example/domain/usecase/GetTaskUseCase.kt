@@ -7,6 +7,10 @@ import com.example.domain.result.Result
 class GetTaskUseCase(private val taskManagerRepository: TaskManagerRepository) {
 
     suspend operator fun invoke(id: Int): Result<TaskModel> {
-        return taskManagerRepository.getTask(id)
+        return try {
+            (taskManagerRepository.getTask(id))
+        } catch (e: Exception) {
+            Result.Failed(e.localizedMessage ?: "Task not found")
+        }
     }
 }

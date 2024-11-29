@@ -1,5 +1,6 @@
 package com.geeks.cleanArch.presentation.fragment
 
+import TasksViewModel
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,29 +13,35 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.geeks.cleanArch.R
 import com.geeks.cleanArch.databinding.FragmentTaskDetailBinding
-import com.geeks.cleanArch.presentation.fragment.viewmodel.TaskViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.example.domain.result.Result
 import com.geeks.cleanArch.presentation.model.TaskUI
+import com.example.domain.result.Result
 
 
 class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
 
     private val binding by viewBinding(FragmentTaskDetailBinding::bind)
-    private val viewModel: TaskViewModel by viewModels()
+    private val viewModel: TasksViewModel by viewModels()
     private val navArgs by navArgs<TaskDetailFragmentArgs>()
     private var taskUI: TaskUI? = null
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val taskId = navArgs.taskId
-        viewModel.getTask(taskId)
+        viewModel.getTask(navArgs.taskId)
         setupListeners()
         updateUI()
+
+
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            viewModel.tasksFlow.collect { task ->
+                task.let {
+                    taskUI = task[id]
+                    updateUI()
+                }
+            }
+        }
 
         viewModel.viewModelScope.launch(Dispatchers.Main) {
             viewModel.taskStateFlow.collectLatest {
@@ -43,7 +50,7 @@ class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
                         taskUI = it.data
                     }
 
-                    is Result.Failed-> {
+                    is Result.Failed -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
 
@@ -62,19 +69,18 @@ class TaskDetailFragment : Fragment(R.layout.fragment_task_detail) {
                 taskDate = binding.etTaskDate.text.toString()
             )
             updatedTask?.let {
-                viewModel.viewModelScope.launch {
-                    viewModel.getTask(it.id)
-                }
+                viewModel.updateTask(it)
                 findNavController().navigateUp()
             }
         }
     }
-
     private fun updateUI() {
-        binding.etTaskName.setText(taskUI?.taskName)
-        binding.etTaskDate.setText(taskUI?.taskDate)
-        taskUI?.taskImage?.let {
-            binding.addPhoto.setImageURI(Uri.parse(it))
+        taskUI?.let {
+            binding.etTaskName.setText(it.taskName)
+            binding.etTaskDate.setText(it.taskDate)
+            it.taskImage?.let { image ->
+                binding.addPhoto.setImageURI(Uri.parse(image))
+            }
         }
     }
 }
