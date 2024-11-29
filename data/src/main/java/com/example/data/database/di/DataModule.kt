@@ -17,6 +17,5 @@ val dataModules: Module = module {
 
     single { get<AppDatabase>().taskManagerDao() }
 
-
     single<TaskManagerRepository> { TaskManagerRepositoryImpl(get()) }
 }

@@ -27,6 +27,7 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.loadTasks()
         addTask()
         initialize()
@@ -35,13 +36,12 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         viewModel.viewModelScope.launch {
             viewModel.loadingFlow.collect { state ->
                 when (state) {
-                    is LoadingState.Loading -> {}
-                    is LoadingState.Error -> {
-                        Toast.makeText(requireContext(), "Error loading task", Toast.LENGTH_SHORT)
-                            .show()
+                    is LoadingState.Loading -> {
                     }
-
-                    else -> {}
+                    is LoadingState.Error -> {
+                        Toast.makeText(requireContext(), "Error loading task", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> { }
                 }
             }
         }
@@ -63,8 +63,8 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
 
     private fun showTask() {
         viewModel.viewModelScope.launch {
-            viewModel.tasksFlow.collectLatest {
-                taskAdapter.updateTasks(it)
+            viewModel.tasksFlow.collectLatest { tasks ->
+                taskAdapter.updateTasks(tasks)
             }
         }
     }

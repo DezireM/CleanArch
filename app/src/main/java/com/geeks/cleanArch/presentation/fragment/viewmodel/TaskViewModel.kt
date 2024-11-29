@@ -84,9 +84,18 @@ class TaskViewModel(
     fun getTask(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = getTaskUseCase(id)) {
-                is Result.Loading -> _taskStateFlow.value = Result.Loading
-                is Result.Success -> _taskStateFlow.value = Result.Success(result.data.toUI())
-                is Result.Failed -> _taskStateFlow.value = Result.Failed(result.message)
+
+                is Result.Loading -> {
+                    _taskStateFlow.value = Result.Loading
+                }
+
+                is Result.Success -> {
+                    _taskStateFlow.value = Result.Success(result.data.toUI())
+                }
+
+                is Result.Failed -> {
+                    _taskStateFlow.value = Result.Failed(result.message)
+                }
             }
         }
     }

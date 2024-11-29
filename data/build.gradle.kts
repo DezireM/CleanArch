@@ -48,12 +48,14 @@ dependencies {
     // Room
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
 
     // Gson
     implementation(libs.gson)
 
     // Koin
     implementation(libs.koin.android)
+    implementation(libs.koin.koin.android)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)

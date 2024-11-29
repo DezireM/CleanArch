@@ -27,7 +27,7 @@ class AddTaskViewModel(
                 is Result.Success -> {
                     _insertMessageStateFlow.value = "Task inserted successfully!"
                 }
-                is Result.Error -> {
+                is Result.Failed -> {
                     _insertMessageStateFlow.value = "Error: ${result.message}"
                 }
                 is Result.Loading -> {
