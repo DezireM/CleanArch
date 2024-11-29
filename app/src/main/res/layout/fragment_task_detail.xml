@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DFE6E7"
+    android:background="#F3F4F6"
     tools:context=".presentation.fragment.TaskDetailFragment">
 
     <ImageButton
@@ -27,18 +26,18 @@
         app:layout_constraintTop_toBottomOf="@id/btn_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="24dp"
+        android:hint="Task Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Task Name"
             android:textColor="@color/colorTextPrimary"
-            android:textColorHint="@color/colorTextHint"
-            android:backgroundTint="#E9AA4C"
             android:drawableStart="@drawable/baseline_task_24"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:backgroundTint="#E9AA4C"
+            android:textColorHint="@color/colorTextHint"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,20 +47,19 @@
         app:layout_constraintTop_toBottomOf="@id/taskNameInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:hint="Due Date">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="00:00"
             android:textColor="@color/colorTextPrimary"
-            android:textColorHint="@color/colorTextHint"
-            android:backgroundTint="#CC8A28"
             android:drawableStart="@drawable/baseline_access_time_24"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:backgroundTint="#CC8A28"
+            android:textColorHint="@color/colorTextHint"/>
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <ImageView
         android:id="@+id/add_photo"
@@ -72,32 +70,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
-        android:contentDescription="Task Image" />
-
+        android:contentDescription="Task Image"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Save Task"
-        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/add_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:backgroundTint="#E7A23B"
-        android:layout_marginTop="24dp" />
+        android:textColor="@android:color/white"
+        android:layout_marginTop="24dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_delete_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Delete Task"
-        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/btn_save_task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:backgroundTint="#B17317"
-        android:layout_marginTop="16dp" />
-
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

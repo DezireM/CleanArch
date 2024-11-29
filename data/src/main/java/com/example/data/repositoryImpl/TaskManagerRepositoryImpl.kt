@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.catch
 
-
 class TaskManagerRepositoryImpl(
     private val taskManagerDao: TaskManagerDao
 ) : TaskManagerRepository {
@@ -39,8 +38,8 @@ class TaskManagerRepositoryImpl(
 
     override suspend fun getAllTasks(): Flow<Result<List<TaskModel>>> {
         return taskManagerDao.getAllTasks()
-            .map { list ->
-                Result.Success(list.map { it.toDomain() }) // DTO to Domain
+            .map { tasks ->
+                Result.Success(tasks.map { it.toDomain() })
             }
             .catch { e ->
                 emit(Result.Failed("Error fetching tasks: ${e.localizedMessage}"))
@@ -62,7 +61,7 @@ class TaskManagerRepositoryImpl(
 
     override suspend fun updateTask(taskModel: TaskModel): Result<TaskModel> {
         return try {
-            taskManagerDao.updateTask(taskModel.toData()) // Domain to DTO
+            taskManagerDao.updateTask(taskModel.toData())
             Result.Success(taskModel)
         } catch (e: Exception) {
             Result.Failed("Error updating task: ${e.localizedMessage}")
@@ -71,7 +70,7 @@ class TaskManagerRepositoryImpl(
 
     override suspend fun deleteTask(task: TaskModel): Result<TaskModel> {
         return try {
-            taskManagerDao.deleteTask(task.toData()) // Domain to DTO
+            taskManagerDao.deleteTask(task.toData())
             Result.Success(task)
         } catch (e: Exception) {
             Result.Failed("Error deleting task: ${e.localizedMessage}")
